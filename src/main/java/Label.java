@@ -120,7 +120,7 @@ public class Label {
         return "GB";
     }
 
-    private String getService() {
+    private String getFeatureID() {
         String routingCode = "";
         switch (this.getSelectedCourierService()) {
             case "XPRESS 24 POD":
@@ -206,17 +206,103 @@ public class Label {
         return routingCode;
     }
 
+    public String getServiceCode() {
+        String code = "";
+        switch (this.getSelectedCourierService()) {
+            case "XPRESS 24 POD":
+                code += "1CP"; //Handling codes 3
+                break;
+            case "XPRESS 24 NON POD":
+                code += "1CN"; //Handling codes 3
+                break;
+            case "XPRESS 48 POD":
+                code += "2CP"; //Handling codes 3
+                break;
+            case "XPRESS 48 NON POD":
+                code += "2CN"; //Handling codes 3
+                break;
+            case "XPRESS XS 48 NON POD":
+                code += "2CXN"; //Handling codes 3
+                break;
+            case "XPECT 24 POD":
+                code += "1VP"; //Handling codes 3
+                break;
+            case "XPECT 24 NON POD":
+                code += "1VN"; //Handling codes 3
+                break;
+            case "XPECT 48 POD":
+                code += "2VP"; //Handling codes 3
+                break;
+            case "XPECT 48 NON POD":
+                code += "2VN"; //Handling codes 3
+                break;
+            case "XPECT 48 XL POD":
+                code += "2VLP"; //Handling codes 3
+                break;
+            case "XPECT 48 XL NON POD":
+                code += "2VLN"; //Handling codes 3
+                break;
+            case "XPECT SATURDAY POD":
+                code += "1VSP"; //Handling codes 3
+                break;
+            case "XPECT SATURDAY NON POD":
+                code += "1VSN"; //Handling codes 3
+                break;
+            case "XPECT 48 RETURN POD":
+                code += "2VPR"; //Handling codes 3
+                break;
+            case "XPECT PRE 12 POD":
+                code += "12P"; //Handling codes 3
+                break;
+            case "XPERT 24 POD DESK":
+                code += "1VD"; //Handling codes 3
+                break;
+            case "XPERT 24 ADDRESS ONLY":
+                code += "1VA"; //Handling codes 3
+                break;
+            case "XPERT 24 HVT POD":
+                code += "1VT"; //Handling codes 3
+                break;
+            case "XPERT 24 BFPO POD":
+                code += "1BFP"; //Handling codes 3
+                break;
+            case "XPERT SATURDAY ADDRESS ONLY":
+                code += "1VSA"; //Handling codes 3
+                break;
+            case "XPERT SATURDAY HVT POD":
+                code += "1VST"; //Handling codes 3
+                break;
+            case "XPERT SATURDAY POD EXCHANGE":
+                code += "1VSX"; //Handling codes 3
+                break;
+            case "XPERT 24 POD EXCHANGE":
+                code += "1VX"; //Handling codes 3
+                break;
+            case "XPERT PRE 12 NON POD":
+                code += "12N"; //Handling codes 3
+                break;
+            case "XPERT PRE 12 HVT ADDRESS ONLY":
+                code += "12T"; //Handling codes 3
+                break;
+            default:
+                System.out.println("default @ getService()");
+                code += "";
+                break;
+        }
+        return code;
+    }
+
     public String generateRoutingCode() {
         //"2LGBB11AA+01000024"
         String routingCode = "";
         routingCode += "2L"; //ANSI data identifier 2
         routingCode += getISO(); //ISO country code 2
-        routingCode += this.getToAddress().getZip(); //Postcode 5-9
+        routingCode += this.getToAddress().getZip().replaceAll("\\s",""); //Postcode 5-9
         routingCode += "+"; //Field separator 1
         routingCode += "01"; //Product codes 2
         routingCode += "00"; //Date code 2
         routingCode += "0"; //Time code 1
-        routingCode += getService(); //Handling codes 3
+        routingCode += getFeatureID(); //Handling codes 3
         return routingCode;
     }
 
