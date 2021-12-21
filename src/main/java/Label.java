@@ -53,6 +53,7 @@ public class Label {
     private boolean commercialInvoice;
     private String[] publicDescription;
     private boolean alternativeCollectionAddressSelected;
+    private String routingCode;
 
     public Label() {
 
@@ -111,6 +112,112 @@ public class Label {
         this.commercialInvoice = commercialInvoice;
         this.publicDescription = publicDescription;
         this.alternativeCollectionAddressSelected = alternativeCollectionAddressSelected;
+        this.routingCode = generateRoutingCode();
+    }
+
+    //TODO: 2 digit iso for corresponding destination country
+    private String getISO() {
+        return "GB";
+    }
+
+    private String getService() {
+        String routingCode = "";
+        switch (this.getSelectedCourierService()) {
+            case "XPRESS 24 POD":
+                routingCode += "007"; //Handling codes 3
+                break;
+            case "XPRESS 24 NON POD":
+                routingCode += "011"; //Handling codes 3
+                break;
+            case "XPRESS 48 POD":
+                routingCode += "012"; //Handling codes 3
+                break;
+            case "XPRESS 48 NON POD":
+                routingCode += "013"; //Handling codes 3
+                break;
+            case "XPRESS XS 48 NON POD":
+                routingCode += "060"; //Handling codes 3
+                break;
+            case "XPECT 24 POD":
+                routingCode += "020"; //Handling codes 3
+                break;
+            case "XPECT 24 NON POD":
+                routingCode += "021"; //Handling codes 3
+                break;
+            case "XPECT 48 POD":
+                routingCode += "022"; //Handling codes 3
+                break;
+            case "XPECT 48 NON POD":
+                routingCode += "023"; //Handling codes 3
+                break;
+            case "XPECT 48 XL POD":
+                routingCode += "024"; //Handling codes 3
+                break;
+            case "XPECT 48 XL NON POD":
+                routingCode += "025"; //Handling codes 3
+                break;
+            case "XPECT SATURDAY POD":
+                routingCode += "026"; //Handling codes 3
+                break;
+            case "XPECT SATURDAY NON POD":
+                routingCode += "027"; //Handling codes 3
+                break;
+            case "XPECT 48 RETURN POD":
+                routingCode += "028"; //Handling codes 3
+                break;
+            case "XPECT PRE 12 POD":
+                routingCode += "085"; //Handling codes 3
+                break;
+            case "XPERT 24 POD DESK":
+                routingCode += "077"; //Handling codes 3
+                break;
+            case "XPERT 24 ADDRESS ONLY":
+                routingCode += "078"; //Handling codes 3
+                break;
+            case "XPERT 24 HVT POD":
+                routingCode += "079"; //Handling codes 3
+                break;
+            case "XPERT 24 BFPO POD":
+                routingCode += "080"; //Handling codes 3
+                break;
+            case "XPERT SATURDAY ADDRESS ONLY":
+                routingCode += "095"; //Handling codes 3
+                break;
+            case "XPERT SATURDAY HVT POD":
+                routingCode += "097"; //Handling codes 3
+                break;
+            case "XPERT SATURDAY POD EXCHANGE":
+                routingCode += "083"; //Handling codes 3
+                break;
+            case "XPERT 24 POD EXCHANGE":
+                routingCode += "084"; //Handling codes 3
+                break;
+            case "XPERT PRE 12 NON POD":
+                routingCode += "086"; //Handling codes 3
+                break;
+            case "XPERT PRE 12 HVT ADDRESS ONLY":
+                routingCode += "087"; //Handling codes 3
+                break;
+            default:
+                System.out.println("default @ getService()");
+                routingCode += "";
+                break;
+        }
+        return routingCode;
+    }
+
+    public String generateRoutingCode() {
+        //"2LGBB11AA+01000024"
+        String routingCode = "";
+        routingCode += "2L"; //ANSI data identifier 2
+        routingCode += getISO(); //ISO country code 2
+        routingCode += this.getToAddress().getZip(); //Postcode 5-9
+        routingCode += "+"; //Field separator 1
+        routingCode += "01"; //Product codes 2
+        routingCode += "00"; //Date code 2
+        routingCode += "0"; //Time code 1
+        routingCode += getService(); //Handling codes 3
+        return routingCode;
     }
 
     public String getCustomerId() {
@@ -529,6 +636,14 @@ public class Label {
         this.alternativeCollectionAddressSelected = alternativeCollectionAddressSelected;
     }
 
+    public String getRoutingCode() {
+        return routingCode;
+    }
+
+    public void setRoutingCode(String routingCode) {
+        this.routingCode = routingCode;
+    }
+
     @Override
     public String toString() {
         return "Label{" +
@@ -584,6 +699,7 @@ public class Label {
                 ", commercialInvoice=" + commercialInvoice +
                 ", publicDescription=" + Arrays.toString(publicDescription) +
                 ", alternativeCollectionAddressSelected=" + alternativeCollectionAddressSelected +
+                ", routingCode=" + routingCode +
                 '}';
     }
 }
