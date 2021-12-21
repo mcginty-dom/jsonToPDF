@@ -7,16 +7,11 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.*;
 import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 //import com.itextpdf.pdfrender.RenderingProperties;
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -238,8 +233,8 @@ public class Main {
         phrase.add(
                 "TO:\n"
                 +label.getToAddress().getCompany()+"\n"
-                +label.getToAddress().getStreetOne()+"\n"
-                +label.getToAddress().getStreetTwo()
+                +label.getToAddress().getStreet1()+"\n"
+                +label.getToAddress().getStreet2()
         );
         cell = new PdfPCell(phrase);
         cell.setBorder(Rectangle.NO_BORDER);

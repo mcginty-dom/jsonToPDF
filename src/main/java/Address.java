@@ -2,9 +2,9 @@ public class Address {
     private String id;
     private String externalId;
     private String externalSource;
-    private String streetOne;
-    private String streetTwo;
-    private String streetThree;
+    private String street1;
+    private String street2;
+    private String street3;
     private String city;
     private String state;
     private String zip;
@@ -25,13 +25,13 @@ public class Address {
     private String type;
     private String deliveryInstructions;
 
-    public Address(String id, String externalId, String externalSource, String streetOne, String streetTwo, String streetThree, String city, String state, String zip, String country, boolean residential, String carrierFacility, String name, String company, String phone, String email, String federalTaxId, String stateTaxId, String clientId, boolean verified, String defaultAddress, String firstName, String lastName, String type, String deliveryInstructions) {
+    public Address(String id, String externalId, String externalSource, String street1, String street2, String street3, String city, String state, String zip, String country, boolean residential, String carrierFacility, String name, String company, String phone, String email, String federalTaxId, String stateTaxId, String clientId, boolean verified, String defaultAddress, String firstName, String lastName, String type, String deliveryInstructions) {
         this.id = id;
         this.externalId = externalId;
         this.externalSource = externalSource;
-        this.streetOne = streetOne;
-        this.streetTwo = streetTwo;
-        this.streetThree = streetThree;
+        this.street1 = street1;
+        this.street2 = street2;
+        this.street3 = street3;
         this.city = city;
         this.state = state;
         this.zip = zip;
@@ -77,28 +77,28 @@ public class Address {
         this.externalSource = externalSource;
     }
 
-    public String getStreetOne() {
-        return streetOne;
+    public String getStreet1() {
+        return street1;
     }
 
-    public void setStreetOne(String streetOne) {
-        this.streetOne = streetOne;
+    public void setStreet1(String street1) {
+        this.street1 = street1;
     }
 
-    public String getStreetTwo() {
-        return streetTwo;
+    public String getStreet2() {
+        return street2;
     }
 
-    public void setStreetTwo(String streetTwo) {
-        this.streetTwo = streetTwo;
+    public void setStreet2(String street2) {
+        this.street2 = street2;
     }
 
-    public String getStreetThree() {
-        return streetThree;
+    public String getStreet3() {
+        return street3;
     }
 
-    public void setStreetThree(String streetThree) {
-        this.streetThree = streetThree;
+    public void setStreet3(String street3) {
+        this.street3 = street3;
     }
 
     public String getCity() {
@@ -259,9 +259,9 @@ public class Address {
                 "id='" + id + '\'' +
                 ", externalId='" + externalId + '\'' +
                 ", externalSource='" + externalSource + '\'' +
-                ", streetOne='" + streetOne + '\'' +
-                ", streetTwo='" + streetTwo + '\'' +
-                ", streetThree='" + streetThree + '\'' +
+                ", streetOne='" + street1 + '\'' +
+                ", streetTwo='" + street2 + '\'' +
+                ", streetThree='" + street3 + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
                 ", zip='" + zip + '\'' +
