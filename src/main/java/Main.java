@@ -79,10 +79,15 @@ public class Main {
                                        PdfContentByte pdfContentByte) throws Exception {
         //Initialize values
         Chunk chunk = new Chunk(new VerticalPositionMark());
-        PdfPTable table = new PdfPTable(1);
+        PdfPTable table = new PdfPTable(2);
         Phrase phrase = new Phrase();
         Paragraph paragraph = new Paragraph();
-        PdfPCell cell = new PdfPCell();
+        PdfPCell cell = new PdfPCell(new Phrase(" "));
+
+        //Add whitespace
+        cell.setBorder(Rectangle.BOTTOM);
+        table.addCell(cell);
+        table.addCell(cell);
 
         //Add from address
         phrase.setFont(SHIP_FROM_FONT);
@@ -92,46 +97,49 @@ public class Main {
                         label.getFromAddress().getLastName()+", "+
                         label.getFromAddress().getZip()
         );
-
-        //Add whitespace
-        phrase.add(chunk);
+        cell = new PdfPCell(phrase);
+        cell.setBorder(Rectangle.LEFT);
+        table.addCell(cell);
 
         //Add meter number
-        paragraph.setFont(LICENCE_FONT);
-        paragraph.add("Meter: "+METER_NUMBER);
-
-        //Combine and add to pdf
-        phrase.add(paragraph);
-        table.addCell(phrase);
+        phrase = new Phrase();
+        phrase.setFont(LICENCE_FONT);
+        phrase.add("Meter: "+METER_NUMBER);
+        cell = new PdfPCell(phrase);
+        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell.setBorder(Rectangle.RIGHT);
+        table.addCell(cell);
         document.add(table);
 
         //Reset
-        table = new PdfPTable(1);
+        table = new PdfPTable(2);
         phrase = new Phrase();
 
         //Add service centre name
         //TODO: currently hardcoded as data is not provided within the test json
         phrase.setFont(INFORMATION_FONT);
         phrase.add(DEPOT_A);
-
-        //Add whitespace
-        phrase.add(chunk);
+        cell = new PdfPCell(phrase);
+        cell.setBorder(Rectangle.LEFT);
+        table.addCell(cell);
 
         //Add tour ID
         //TODO: currently hardcoded as data is not provided within the test json
+        phrase = new Phrase();
+        phrase.setFont(INFORMATION_FONT);
         phrase.add(DEPOT_B+"\n");
-
-        //Combine and add to pdf
         cell = new PdfPCell(phrase);
-        cell.setBorderColorBottom(BaseColor.WHITE);
-        cell.setBorderColorTop(BaseColor.WHITE);
+        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        cell.setBorder(Rectangle.RIGHT);
         table.addCell(cell);
         document.add(table);
 
-        table = new PdfPTable(1);
-        cell = new PdfPCell(new Phrase(""));
-        cell.setBorderColorBottom(BaseColor.WHITE);
-        cell.setBorderColorTop(BaseColor.WHITE);
+        //Add whitespace to fix depot underscore issue
+        table = new PdfPTable(2);
+        cell = new PdfPCell(new Phrase(" "));
+        cell.setBorder(Rectangle.LEFT);
+        table.addCell(cell);
+        cell.setBorder(Rectangle.RIGHT);
         table.addCell(cell);
         document.add(table);
 
@@ -158,6 +166,7 @@ public class Main {
         document.add(table);
 
         //Reset
+        table = new PdfPTable(2);
         phrase = new Phrase();
 
         //Add consignee ref
@@ -166,10 +175,16 @@ public class Main {
         if(label.getCustomerReference()!=null) {
             phrase.add(label.getCustomerReference());
         }
-
-        document.add(createRow(phrase));
+        cell = new PdfPCell(phrase);
+        cell.setBorder(Rectangle.LEFT);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase(" "));
+        cell.setBorder(Rectangle.RIGHT);
+        table.addCell(cell);
+        document.add(table);
 
         //Reset
+        table = new PdfPTable(2);
         phrase = new Phrase();
 
         //Add consignor ref
@@ -178,7 +193,13 @@ public class Main {
         if(label.getShipperWarehouseCode()!=null) {
             phrase.add(label.getShipperWarehouseCode());
         }
-        document.add(createRow(phrase));
+        cell = new PdfPCell(phrase);
+        cell.setBorder(Rectangle.LEFT);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase(" "));
+        cell.setBorder(Rectangle.RIGHT);
+        table.addCell(cell);
+        document.add(table);
 
         //Reset
         table = new PdfPTable(3);
